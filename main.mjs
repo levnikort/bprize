@@ -119,13 +119,13 @@ bot.on(message("text"), async (ctx) => {
   `);
 });
 
-bot.launch(async () => {
-  app.listen(process.env.PORT || 3000, () => {
-    console.log("server run, port " + (process.env.PORT || 3000));
+app.listen(process.env.PORT || 3000, async () => {
+  console.log("server run, port " + (process.env.PORT || 3000));
+  await bot.launch(async () => {
     setInterval(() => {
       fetch("https://bprize.onrender.com").then(() => {
         console.log("ping");
       });
-    }, 2 * 60 * 1000)
+    }, 2 * 60 * 1000);
   });
 });
