@@ -74,7 +74,9 @@ bot.command('sendgift808', async (ctx) => {
   }
 
   for (const u of allUsers) {
+    console.log(u.telegram_id);
     if (!users.has(u.telegram_id)) continue;
+    console.log("OTHER:", u.telegram_id);
 
     if (u.telegram_id === dodoUser1 || u.telegram_id === dodoUser2) {
       await bot.telegram.sendMessage(u.telegram_id, dodo);
