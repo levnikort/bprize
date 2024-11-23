@@ -43,6 +43,50 @@ bot.start((ctx) =>
 `)
 );
 
+const lava10 = `
+Поздравляем! Твой выигрыш — промокод 10% на скидку на любой из ивентов LAVA 💥
+
+“LAVA10”
+`;
+
+const lava20 = `
+Поздравляем! Твой выигрыш — промокод 20% на скидку на любой из ивентов LAVA 💥
+
+“LAVA20”
+`;
+
+const dodo = `
+Поздравляем! Твой выигрыш — Додо пицца 35 см!
+
+Код будет отправлен в ближайшее время.
+`;
+
+const dodoUser1 = 1282172705;
+const dodoUser2 = 6516647060;
+
+bot.command('sendgift808', async (ctx) => {
+  const codes = await Codes.find({}).toArray();
+  const allUsers = await Users.find({}).toArray();
+  const users = new Set();
+
+  for (const code of codes) {
+    users.add(code.user_id);
+  }
+
+  for (const u of allUsers) {
+    if (!users.has(u.telegram_id)) continue;
+
+    if (u.telegram_id === dodoUser1 || u.telegram_id === dodoUser2) {
+      await bot.telegram.sendMessage(u.telegram_id, dodo);
+      console.log("send dodo code:", u.telegram_id);
+      continue;
+    }
+
+    bot.telegram.sendMessage(u.telegram_id, Math.random() > 0.5 ? lava20 : lava10);
+  }
+
+})
+
 bot.command('users', async (ctx) => {
   let total = 0;
 
